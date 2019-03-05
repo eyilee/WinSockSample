@@ -70,7 +70,7 @@ int main(int argc, char **argv)
 
 	int recvbuflen = DEFAULT_BUFLEN;
 
-	const char *sendbuf = "this is a test";
+	const char *sendbuf = "this is a test\0";
 	char recvbuf[DEFAULT_BUFLEN];
 
 	// Send an initial buffer
