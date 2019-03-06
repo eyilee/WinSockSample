@@ -19,9 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="TCPClient.h" />
+    <ClInclude Include="TCPServer.h" />
     <ClInclude Include="TCPSocket.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="TCPClient.cpp" />
+    <ClCompile Include="TCPServer.cpp" />
     <ClCompile Include="TCPSocket.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

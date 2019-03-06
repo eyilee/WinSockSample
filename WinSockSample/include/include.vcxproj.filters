@@ -18,9 +18,21 @@
     <ClInclude Include="TCPSocket.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
+    <ClInclude Include="TCPServer.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="TCPClient.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TCPSocket.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="TCPServer.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="TCPClient.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
   </ItemGroup>
