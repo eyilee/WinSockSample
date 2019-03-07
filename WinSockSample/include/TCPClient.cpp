@@ -36,25 +36,42 @@ TCPClient::TCPClient(const char * ip, const char * port) {
 }
 
 TCPClient::~TCPClient() {
-	if (shutdown(connectSocket, SD_SEND) == SOCKET_ERROR) {
-		std::cerr << "shutdown failed: " << WSAGetLastError() << std::endl;
-	}
-
 	closesocket(connectSocket);
 
 	WSACleanup();
+}
+
+void TCPClient::Run() {
+	if (Running) {
+		return;
+	}
+
+	Running = true;
+
+	std::thread t(&TCPClient::Connect, this, connectSocket);
+	t.detach();
+}
+
+void TCPClient::Stop() {
+	Running = false;
+}
+
+void TCPClient::Connect(SOCKET sock) {
+	char buf[BUFSIZ];
+	ZeroMemory(buf, sizeof(buf));
+
+	while (recv(sock, buf, BUFSIZ, 0) > 0) {
+		std::cout << buf;
+	}
+
+	if (shutdown(sock, SD_SEND) == SOCKET_ERROR) {
+		std::cerr << "shutdown failed: " << WSAGetLastError() << std::endl;
+	}
 }
 
 void TCPClient::Write(const char *data) {
 	int e = send(connectSocket, data, (int)strlen(data), 0);
 	if (e == SOCKET_ERROR) {
 		std::cerr << "send failed: " << WSAGetLastError() << std::endl;
-	}
-
-	printf("Bytes Sent: %ld\n", e);
-
-	e = shutdown(connectSocket, SD_SEND);
-	if (e == SOCKET_ERROR) {
-		std::cerr << "shutdown failed: " << WSAGetLastError() << std::endl;
 	}
 }

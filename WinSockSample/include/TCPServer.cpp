@@ -41,13 +41,16 @@ TCPServer::TCPServer(const char *ip, const char *port) {
 }
 
 TCPServer::~TCPServer() {
-	closesocket(clientSocket);
 	closesocket(listenSocket);
 
 	WSACleanup();
 }
 
 void TCPServer::Run() {
+	if (Running) {
+		return;
+	}
+
 	Running = true;
 
 	while (Running) {
@@ -71,10 +74,19 @@ void TCPServer::Connect(SOCKET sock) {
 	ZeroMemory(buf, sizeof(buf));
 
 	while (recv(sock, buf, BUFSIZ, 0) > 0) {
-		std::cout << buf << std::endl;
+		std::cout << buf;
 	}
 
 	if (shutdown(sock, SD_SEND) == SOCKET_ERROR) {
 		std::cerr << "shutdown failed: " << WSAGetLastError() << std::endl;
+	}
+
+	closesocket(sock);
+}
+
+void TCPServer::Write(SOCKET sock, const char *data) {
+	int e = send(sock, data, (int)strlen(data), 0);
+	if (e == SOCKET_ERROR) {
+		std::cerr << "send failed: " << WSAGetLastError() << std::endl;
 	}
 }

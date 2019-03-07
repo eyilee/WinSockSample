@@ -8,14 +8,15 @@ public:
 	TCPClient(const char *ip, const char *port);
 	~TCPClient();
 
-	//void Run();
-	//void Stop();
-	//void Connect(SOCKET sock);
+	void Run();
+	void Stop();
+	void Connect(SOCKET sock);
 	//void Read();
 	void Write(const char *data);
 
 	//virtual void OnRead();
 	//virtual void OnWrite();
+	const bool &isRunning() const { return Running; };
 
 private:
 	bool Running = false;
