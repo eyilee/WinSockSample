@@ -9,18 +9,18 @@
 #include <vector>
 #include <iostream>
 
-class Package : public std::vector<char> {
-
-};
-
-class Myclass {
+class Stream {
+private:
 	size_t it = 0;
-	Package pkg;
+	std::vector<char> pkg;
 
 public:
+	std::vector<char> &data() {
+		return pkg;
+	}
 
 	template<class T>
-	Myclass operator << (T &t) {
+	Stream operator << (T &t) {
 		char *pos = (char *)&t;
 		int size = sizeof(T) / sizeof(char);
 
@@ -30,54 +30,84 @@ public:
 	}
 
 	template<class T>
-	Myclass operator >> (T &t) {
+	Stream operator >> (T &t) {
 		t = *(T *)(&*pkg.begin() + it);
 		it += sizeof(T) / sizeof(char);
 		return *this;
 	}
+};
 
-	void print() {
-		size_t length = pkg.size();
+template <typename T>
+class Command {
+private:
+	static UINT ID;
 
-		for (size_t i = 0; i < length; i++)
-		{
-			std::cout << std::hex << (int)pkg[i] << " ";
-		}
+public:
+	virtual void Serialize(Stream &stream) {
+		stream << ID;
+		OnSerialize(stream);
+	}
 
-		std::cout << std::endl;
+	virtual void OnSerialize(Stream &stream) = 0;
+
+	virtual void Derialize(Stream &stream) {
+		stream >> ID;
+		OnDerialize(stream);
+	}
+
+	virtual void OnDerialize(Stream &stream) = 0;
+};
+
+template <typename T>
+UINT Command<T>::ID;
+
+class One : public Command<One> {
+private:
+	int data1;
+	char data2;
+
+public:
+	One(int data1, char data2)
+		: data1(data1)
+		, data2(data2)
+	{
+	}
+
+	void OnSerialize(Stream &stream) {
+		stream << data1;
+		stream << data2;
+	}
+
+	void OnDerialize(Stream &stream) {
+		stream >> data1;
+		stream >> data2;
 	}
 };
 
-struct Newclass {
-	int a;
-	char b;
+class Two : public Command<Two> {
+private:
+	float data1;
+	bool data2;
+
+public:
+	Two(float data1, bool data2)
+		: data1(data1)
+		, data2(data2)
+	{
+	}
+
+	void OnSerialize(Stream &stream) {
+		stream << data1;
+		stream << data2;
+	}
+
+	void OnDerialize(Stream &stream) {
+		stream >> data1;
+		stream >> data2;
+	}
 };
 
 int main()
 {
-	Myclass my;
-	bool b = true;
-	my << b;
-	int i = 65535;
-	my << i;
-	my.print();
-
-	bool c;
-	my >> c;
-	int j;
-	my >> j;
-
-	std::cout << c << std::endl;
-	std::cout << j << std::endl;
-
-	Newclass nc{ 1, 'a' };
-	my << nc;
-	Newclass nc2;
-	my >> nc2;
-
-	std::cout << nc2.a << std::endl;
-	std::cout << nc2.b << std::endl;
-
-	system("pause");
 	return 0;
 }
