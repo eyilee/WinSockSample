@@ -6,13 +6,20 @@
 //   5. 前往 [專案] > [新增項目]，建立新的程式碼檔案，或是前往 [專案] > [新增現有項目]，將現有程式碼檔案新增至專案
 //   6. 之後要再次開啟此專案時，請前往 [檔案] > [開啟] > [專案]，然後選取 .sln 檔案
 
+#define WIN32_LEAN_AND_MEAN
+
 #ifdef WIN32
 #include <sdkddkver.h>
+#else
+#include <winsdkver.h>
 #endif
 
 #ifndef PCH_H
 #define PCH_H
 
-// TODO: 請於此新增您要先行編譯的標頭
+#include <iostream>
+#include <vector>
+
+#include <boost/asio.hpp>
 
 #endif //PCH_H

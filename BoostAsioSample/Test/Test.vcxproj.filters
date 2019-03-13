@@ -18,12 +18,33 @@
     <ClInclude Include="pch.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
+    <ClInclude Include="BinInStream.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="BinOutStream.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="BinStream.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="biniostream.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
     <ClCompile Include="Test.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="BinInStream.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="BinOutStream.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="BinStream.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
   </ItemGroup>

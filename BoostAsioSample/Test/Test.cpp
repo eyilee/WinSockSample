@@ -8,6 +8,9 @@
 #include <ctime>
 #include <vector>
 #include <iostream>
+#include <bitset>
+
+#include "biniostream.h"
 
 class Stream {
 private:
@@ -94,7 +97,7 @@ private:
 public:
 	UINT book(ICommandGenerator *command) {
 		commands.push_back(command);
-		return commands.size() - 1;
+		return (UINT)commands.size() - 1;
 	}
 
 	ICommand *getCommand(Stream stream) {
@@ -168,6 +171,81 @@ public:
 
 int main()
 {
+	bool b = true;
+	char c = 'c';
+	unsigned char uc = 'u';
+	short s = 32767;
+	unsigned short us = 32768;
+	int i = 2147483647;
+	unsigned int ui = 2147483648;
+	long l = 2147483647;
+	unsigned long ul = 2147483648;
+	long long ll = 9223372036854775807;
+	unsigned long long ull = 9223372036854775808;
+	float f = 0.99f;
+	double d = 0.999;
+
+	std::cout << "origin:" << std::endl;
+	std::cout << b << std::endl;
+	std::cout << c << std::endl;
+	std::cout << uc << std::endl;
+	std::cout << s << std::endl;
+	std::cout << us << std::endl;
+	std::cout << i << std::endl;
+	std::cout << ui << std::endl;
+	std::cout << l << std::endl;
+	std::cout << ul << std::endl;
+	std::cout << ll << std::endl;
+	std::cout << ull << std::endl;
+	std::cout << f << std::endl;
+	std::cout << d << std::endl;
+
+	BinOutStream outstream;
+	outstream << b;
+	outstream << c;
+	outstream << uc;
+	outstream << s;
+	outstream << us;
+	outstream << i;
+	outstream << ui;
+	outstream << l;
+	outstream << ul;
+	outstream << ll;
+	outstream << ull;
+	outstream << f;
+	outstream << d;
+
+	BinInStream instream;
+	instream.bytes = outstream.bytes;
+	instream >> b;
+	instream >> c;
+	instream >> uc;
+	instream >> s;
+	instream >> us;
+	instream >> i;
+	instream >> ui;
+	instream >> l;
+	instream >> ul;
+	instream >> ll;
+	instream >> ull;
+	instream >> f;
+	instream >> d;
+
+	std::cout << "after:" << std::endl;
+	std::cout << b << std::endl;
+	std::cout << c << std::endl;
+	std::cout << uc << std::endl;
+	std::cout << s << std::endl;
+	std::cout << us << std::endl;
+	std::cout << i << std::endl;
+	std::cout << ui << std::endl;
+	std::cout << l << std::endl;
+	std::cout << ul << std::endl;
+	std::cout << ll << std::endl;
+	std::cout << ull << std::endl;
+	std::cout << f << std::endl;
+	std::cout << d << std::endl;
+
 	CommandBook commands;
 
 	// regesiter commands
